@@ -1,0 +1,49 @@
+{
+  "name": "vendordesk-angular-interview",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Angular 22 standalone live-coding interview workspace",
+  "engines": {
+    "node": "^22.22.3 || ^24.15.0 || >=26.0.0"
+  },
+  "scripts": {
+    "setup": "node scripts/setup.mjs",
+    "doctor": "node scripts/doctor.mjs",
+    "start": "node scripts/dev.mjs",
+    "start:web": "ng serve --host 0.0.0.0 --port 4200",
+    "start:api": "node mock-api/server.mjs",
+    "dev:stop": "node scripts/auto-start.mjs --stop",
+    "build": "ng build",
+    "typecheck": "tsc --noEmit -p tsconfig.app.json && tsc --noEmit -p tsconfig.spec.json",
+    "test": "jest --config jest.config.cjs --runInBand",
+    "test:watch": "jest --config jest.config.cjs --watch",
+    "test:coverage": "jest --config jest.config.cjs --runInBand --coverage",
+    "test:challenge": "jest --config jest.challenge.config.cjs --runInBand",
+    "test:all": "npm test && npm run test:challenge && npm run test:api",
+    "test:api": "node --test mock-api/server.test.mjs",
+    "api:reset": "node scripts/reset-api.mjs",
+    "verify": "npm run doctor && npm run typecheck && npm test && npm run test:api && npm run build",
+    "verify:complete": "npm run verify && npm run test:challenge"
+  },
+  "dependencies": {
+    "@angular/common": "22.2.3",
+    "@angular/compiler": "22.2.3",
+    "@angular/core": "22.2.3",
+    "@angular/forms": "22.2.3",
+    "@angular/platform-browser": "22.2.3",
+    "@angular/router": "22.2.3",
+    "rxjs": "7.8.2",
+    "tslib": "2.8.1"
+  },
+  "devDependencies": {
+    "@angular/build": "22.2.4",
+    "@angular/cli": "22.2.4",
+    "@angular/compiler-cli": "22.2.3",
+    "@types/jest": "30.0.0",
+    "jest": "30.5.2",
+    "jest-environment-jsdom": "30.5.2",
+    "jest-preset-angular": "17.0.3",
+    "jsdom": "28.1.0",
+    "typescript": "6.0.3"
+  }
+}

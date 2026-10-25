@@ -1,0 +1,39 @@
+<div class="page-heading"><div><p class="eyebrow">OPERATIONS / VENDOR DIRECTORY</p><h1>Good partnerships.<br class="mobile-break" /> Better visibility.</h1><p class="page-description">Find a vendor, review their details, and keep your team up to date.</p></div><span class="workspace-tag">INTERVIEW WORKSPACE</span></div>
+<app-vendor-summary />
+<div class="workspace-grid">
+  <section class="panel directory" aria-labelledby="directory-heading">
+    <div class="directory-heading"><div><h2 id="directory-heading">Vendor directory</h2><p>Search by name or category.</p></div><span class="result-count">{{ store.filteredVendors().length }} results</span></div>
+    <div class="toolbar">
+      <div class="search-field"><label class="sr-only" for="vendor-search">Search vendors</label><span class="search-icon" aria-hidden="true"></span><input type="search" id="vendor-search" data-testid="search-input" [formControl]="query" placeholder="Search vendors…" autocomplete="off" /></div>
+      <div class="filter-field"><label class="sr-only" for="status-filter">Filter by status</label><select id="status-filter" [value]="store.statusFilter()" (change)="changeFilter($event)"><option value="all">All statuses</option><option value="active">Active</option><option value="pending">Pending review</option><option value="suspended">Suspended</option></select></div>
+    </div>
+    @if (notice(); as message) { <div class="notice notice-success" role="status">{{ message }}</div> }
+    @if (search.error(); as message) { <div class="notice notice-error" role="alert" data-testid="search-error">{{ message }}</div> }
+    <div class="search-state" aria-live="polite">@if (search.loading()) { <span class="loading-dot"></span>Searching vendors… } @else { <span>{{ store.filteredVendors().length }} vendors shown</span> }</div>
+    <div class="table-scroll" [attr.aria-busy]="search.loading()">
+      <table><caption class="sr-only">Matching vendors</caption><thead><tr><th scope="col">Vendor</th><th scope="col">Status</th><th scope="col" class="numeric">Annual spend</th><th scope="col"><span class="sr-only">Actions</span></th></tr></thead>
+        <tbody>
+          @for (vendor of store.filteredVendors(); track vendor.id) {
+            <tr [class.selected-row]="store.selectedId() === vendor.id" [attr.data-vendor-id]="vendor.id">
+              <td><div class="vendor-cell"><span class="vendor-monogram">{{ vendor.name.slice(0, 1) }}</span><div><strong>{{ vendor.name }}</strong><span>{{ vendor.category }}</span></div></div></td>
+              <td><app-status-badge [status]="vendor.status" /></td>
+              <td class="numeric amount">{{ vendor.annualSpend | currency:'USD':'symbol':'1.0-0' }}</td>
+              <td><button class="text-button" type="button" (click)="store.select(vendor.id)" [attr.aria-label]="'Edit ' + vendor.name">Edit <span aria-hidden="true">&#8599;</span></button></td>
+            </tr>
+          } @empty {
+            <tr><td colspan="4" class="empty-state">@if (search.loading()) { Loading your vendor directory… } @else { No vendors match this search. Try a different name or status. }</td></tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    <div class="directory-footer"><span>Sample data only</span><span>Changes live in memory for this API session.</span></div>
+  </section>
+  <aside>
+    @for (vendor of editorVendors(); track vendor.id) {
+      <app-vendor-editor [vendor]="vendor" (saved)="onSaved($event)" (closed)="store.select(null)" />
+    } @empty {
+      <section class="panel detail-placeholder"><span class="detail-illustration" aria-hidden="true"><span></span><span></span><span></span></span><p class="small-label">A CLOSER LOOK</p><h2>Every vendor<br />has a story.</h2><p>Select <strong>Edit</strong> to review a vendor and update their status.</p><div class="placeholder-divider"></div><p class="field-help">The interview brief and API contract are in the repository.</p></section>
+    }
+  </aside>
+</div>
+<footer class="page-footer"><span>VendorDesk / Engineering interview</span><span>Standalone Angular · Signals · Jest</span></footer>

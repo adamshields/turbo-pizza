@@ -1,0 +1,41 @@
+{
+  "name": "Angular 22 Interview - VendorDesk",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "24"
+    }
+  },
+  "hostRequirements": {
+    "cpus": 2,
+    "memory": "4gb",
+    "storage": "16gb"
+  },
+  "forwardPorts": [
+    4200
+  ],
+  "portsAttributes": {
+    "4200": {
+      "label": "VendorDesk",
+      "onAutoForward": "openPreview"
+    },
+    "3001": {
+      "label": "Internal mock API",
+      "onAutoForward": "ignore"
+    }
+  },
+  "postCreateCommand": "node scripts/setup.mjs",
+  "postStartCommand": "node scripts/auto-start.mjs",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "Angular.ng-template",
+        "ms-vsliveshare.vsliveshare"
+      ],
+      "settings": {
+        "editor.tabSize": 2
+      }
+    }
+  },
+  "remoteUser": "vscode"
+}

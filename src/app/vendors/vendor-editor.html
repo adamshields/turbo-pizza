@@ -1,0 +1,27 @@
+<section class="editor panel" aria-labelledby="editor-heading">
+  <div class="panel-heading"><span class="small-label">VENDOR DETAILS</span><button type="button" class="icon-button" aria-label="Close vendor details" (click)="closed.emit()">&#215;</button></div>
+  <div class="vendor-identity"><span class="vendor-monogram large">{{ vendor().name.slice(0, 1) }}</span><div><h2 id="editor-heading">{{ vendor().name }}</h2><p>{{ vendor().category }}</p></div></div>
+  <app-status-badge [status]="vendor().status" />
+  <dl class="contact-details"><div><dt>Contact</dt><dd>{{ vendor().contact }}</dd></div><div><dt>Email</dt><dd>{{ vendor().email }}</dd></div></dl>
+  <hr />
+  <form [formGroup]="form" (ngSubmit)="save()" novalidate>
+    <h3>Update vendor status</h3>
+    <label for="vendor-status">Status</label>
+    <select id="vendor-status" formControlName="status" data-testid="edit-status">
+      @for (status of statuses; track status) { <option [value]="status">{{ status }}</option> }
+    </select>
+    <label for="vendor-note">Decision note</label>
+    <textarea id="vendor-note" formControlName="note" rows="4" maxlength="200" aria-describedby="note-help note-errors" data-testid="edit-note" placeholder="Add context for your team"></textarea>
+    <p class="field-help" id="note-help">A suspension needs a note of at least 10 non-padding characters. Maximum 200 characters.</p>
+    <div id="note-errors">
+      @if (form.hasError('suspensionNote') && (submitted() || form.controls.note.touched)) {
+        <p class="field-error" role="alert">Explain the suspension in at least 10 characters.</p>
+      }
+      @if (form.controls.note.hasError('maxlength') && (submitted() || form.controls.note.touched)) {
+        <p class="field-error" role="alert">Keep the note to 200 characters or fewer.</p>
+      }
+    </div>
+    @if (error(); as message) { <div class="notice notice-error" role="alert" data-testid="save-error">{{ message }}</div> }
+    <div class="form-actions"><button type="button" class="button button-secondary" (click)="closed.emit()">Cancel</button><button class="button button-primary" type="submit" [disabled]="saving()" data-testid="save-button">@if (saving()) { Saving… } @else { Save changes }</button></div>
+  </form>
+</section>
