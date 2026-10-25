@@ -1,5 +1,9 @@
 {
   "editor.tabSize": 2,
+  "workbench.startupEditor": "readme",
+  "workbench.editorAssociations": {
+    "*.md": "vscode.markdown.preview.editor"
+  },
   "files.exclude": {
     "**/.angular": true,
     "**/node_modules": true
