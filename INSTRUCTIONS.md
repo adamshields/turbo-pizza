@@ -8,7 +8,7 @@ This file is the complete handout.
 
 ## Contents
 
-1. [The app](#1-the-app)
+1. [Open the app](#1-open-the-app)
 2. [The assignment](#2-the-assignment)
 3. [Working the interview](#3-working-the-interview)
 4. [Verify your work](#4-verify-your-work)
@@ -18,7 +18,18 @@ This file is the complete handout.
 8. [Project layout](#8-project-layout)
 9. [Stack](#9-stack)
 
-## 1. The app
+## 1. Open the app
+
+Do this first. The Codespace starts the app and its API for you, so you don't install or run anything.
+
+1. Open the **Ports** tab in the Codespace.
+2. Find port **4200** (labeled VendorDesk) and choose **Open in Browser**.
+
+The address at the top of this file, `http://localhost:4200`, works only in the desktop VS Code app. In a browser Codespace, use the Ports tab.
+
+If the page is blank or shows an error, wait a minute. Angular may still be compiling.
+
+### What you'll see
 
 - **Summary cards** at the top count the vendors matching the current search, before the status filter is applied.
 - **Vendor directory** lists the vendors matching the search and status filter. The "results" count reflects the filter.
@@ -36,17 +47,44 @@ Investigate these reports, make a small and understandable fix, and demonstrate 
 
 ### 2.1 Make search reliable
 
-**Reproduce:** enter `a`, wait about 350 ms, then replace it with `acme`. The requests have different response delays, so an older search can finish after a newer one. Check both the Network panel and the displayed results.
+Operations reports that the list sometimes shows vendors for a search the user has already replaced. This section explains how to see that, what the correct behavior is, and how to know your fix works.
 
-**Required behavior:**
+#### Reproduce the bug
 
-- The latest query determines the displayed results.
-- Coalesce rapid changes for **250 ms**.
-- Ignore repeated queries that differ only in surrounding spaces.
-- Keep searching after an individual request fails.
-- Show understandable loading and error states.
+1. Open the **Network** tab in the browser developer tools and keep it open.
+2. In the search box, type `a`. Wait about 350 ms. A request for `/api/vendors?q=a` appears. The API takes about 1.2 seconds to answer it.
+3. Without waiting for that request, clear the box and type `acme`. A request for `/api/vendors?q=acme` appears. The API answers it in about 150 ms.
+4. Watch the directory and the Network panel for the next two seconds.
 
-The exact query `error` returns HTTP 503. Later searches still succeed. The API delays for each query are listed in [section 7](#7-api-reference). Do not change them.
+Timeline with the sample API:
+
+| Time | What happens | What the user should see |
+| --- | --- | --- |
+| 0 ms | You type `a`. Request A starts. | "Searching vendors…" |
+| about 350 ms | You type `acme`. Request B starts. | Still "Searching vendors…" |
+| about 500 ms | Request B finishes with the `acme` vendors. | The `acme` results: Acme Electrical and Acme Plumbing |
+| about 1,200 ms | Request A finishes with the broader `a` results. | The directory should still show the `acme` results |
+
+If the directory changes to the broader `a` results at about 1,200 ms, you have reproduced the bug. The Network panel shows both requests, so you can check their order and timing even when the displayed results are wrong.
+
+#### Required behavior
+
+Each rule below has a concrete check you can run in the app.
+
+- **The latest query determines the results.** After you stop typing, the directory shows results for the query in the box. A late answer to an older query must never replace them. Check it with the timeline above.
+- **Rapid typing sends one request.** Type `acme` one letter at a time, quickly. The Network panel should show a single request for `q=acme`, sent about 250 ms after the last keystroke. Coalesce changes for **250 ms**.
+- **Spaces do not count.** Typing `  acme ` should not send a new request if the last search was `acme`. Ignore repeated queries that differ only in surrounding spaces.
+- **One failed search does not stop the next.** Type `error`. The HTTP 503 response should show a search error in the results area. Then type `acme`. Its results should appear and the error should clear. Keep searching after an individual request fails.
+- **Loading and error states are visible.** While a search is pending, the results area shows that it is loading. After a failure, it shows an understandable message, not an empty list with no explanation.
+
+The API response delays are fixed. The `a` query takes 1,200 ms, `ac` takes 900 ms, `acm` takes 500 ms, and every other query takes 150 ms. See [section 7](#7-api-reference). Do not change them.
+
+#### Done when
+
+- The timeline in "Reproduce the bug" no longer produces the `a` results after `acme`.
+- Typing `acme` one letter at a time sends one Network request for `q=acme`.
+- Typing `error`, then `acme`, shows the error and then the `acme` results.
+- You have at least one regression test that fails before your fix and passes after it. Section 4 explains how to write it.
 
 ### 2.2 Complete status editing
 
