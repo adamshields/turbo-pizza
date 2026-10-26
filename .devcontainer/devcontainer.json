@@ -27,6 +27,11 @@
   "postCreateCommand": "node scripts/setup.mjs",
   "postStartCommand": "node scripts/auto-start.mjs",
   "customizations": {
+    "codespaces": {
+      "openFiles": [
+        "INSTRUCTIONS.md"
+      ]
+    },
     "vscode": {
       "extensions": [
         "Angular.ng-template",

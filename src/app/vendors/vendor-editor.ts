@@ -34,7 +34,6 @@ export class VendorEditor {
   }
 
   save(): void {
-    // Implement the status-update ticket in CANDIDATE.md.
     this.submitted.set(true);
     this.error.set('Status updates have not been implemented yet.');
   }

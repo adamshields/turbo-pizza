@@ -13,7 +13,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
         <a routerLink="/vendors" class="brand"><span class="brand-mark">V</span>VendorDesk<span class="brand-dot">.</span></a>
         <p class="sidebar-label">WORKSPACE</p>
         <a routerLink="/vendors" class="nav-link" aria-current="page"><span class="nav-symbol" aria-hidden="true">&#9638;</span>Vendors<span class="nav-indicator"></span></a>
-        <div class="sidebar-note"><span class="small-label">LIVE CODING WORKSPACE</span><h2>Small app.<br />Real engineering.</h2><p>Explore, reproduce, improve.<br />Start with CANDIDATE.md.</p></div>
+        <div class="sidebar-note"><span class="small-label">LIVE CODING WORKSPACE</span><h2>Small app.<br />Real engineering.</h2><p>Explore, reproduce, improve.<br />Start with INSTRUCTIONS.md.</p></div>
         <div class="sidebar-footer"><span class="avatar">VD</span><div><strong>Operations team</strong><span>Interview environment</span></div></div>
       </aside>
       <div class="main-shell">
