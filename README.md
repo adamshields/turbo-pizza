@@ -4,7 +4,11 @@
 
 VendorDesk is a small Angular vendor-management app for a 60-minute pairing interview. You can search and filter a directory of vendors, see summary counts, and edit a vendor's status and note.
 
-The Codespace installs dependencies, runs the starter checks, and starts the app and local API automatically. Wait for Angular to finish compiling, then use forwarded port **4200**. You should not need to install or start anything yourself. If the app does not appear, tell your interviewer.
+The Codespace installs dependencies, runs the starter checks, and starts the app and local API automatically. Wait for Angular to finish compiling, then use forwarded port **4200**. You should not need to install or start anything yourself.
+
+Link
+
+http://localhost:4200
 
 ## The assignment
 
@@ -35,9 +39,9 @@ Notes are trimmed before storage. A note containing `[fail]` triggers a repeatab
 
 The summary cards count the current search results **before** the status filter. The directory count reflects the filter. This is intentional.
 
-## Working together
+## Working the interview
 
-This is a pairing session, not a typing-speed contest. Ask questions, explain what you observe, and make the smallest clear change. Before starting, agree with the interviewer on the AI-assistance policy and whether Angular documentation may be used; apply the same policy throughout.
+Talk through the problem, ask for clarification, and explain your reasoning rather than silently coding as fast as possible. Make small, understandable changes that preserve control and clarity.
 
 The app uses Angular 22, standalone components, signals, zoneless change detection, and typed reactive forms. Keep the existing patterns where appropriate. You do not need to add a state-management library, rewrite the project, or change the API delays. A different sound design is fine if you can explain it and preserve the expected behavior.
 
