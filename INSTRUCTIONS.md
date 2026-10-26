@@ -1,5 +1,7 @@
 # VendorDesk — Angular pairing exercise
 
+http://localhost:4200
+
 VendorDesk is a small Angular vendor-management app for a 60-minute pairing interview. You can search and filter a directory of vendors, see summary counts, and edit a vendor's status and note. Parts of it are unfinished or broken on purpose. Your job is to investigate, fix, and verify them.
 
 This file is the complete handout.
