@@ -38,7 +38,10 @@
         "ms-vsliveshare.vsliveshare"
       ],
       "settings": {
-        "editor.tabSize": 2
+        "editor.tabSize": 2,
+        "workbench.editorAssociations": {
+          "*.md": "vscode.markdown.preview.editor"
+        }
       }
     }
   },
