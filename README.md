@@ -73,6 +73,3 @@ You do not need to finish every stretch case. Prioritize a correct, understandab
 
 Leave your changes on the supplied branch. Be ready to summarize what changed, show the relevant test results, demonstrate one successful flow and one failure flow, and identify one remaining limitation and your next verification step.
 
-## Interviewer
-
-Facilitation and evaluation guidance is in [INTERVIEWER.md](INTERVIEWER.md).
